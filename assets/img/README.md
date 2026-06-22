@@ -39,6 +39,25 @@ gallery/
 
 ---
 
+## サービスバナー（SERVICE 8事業）
+
+`service/` フォルダに置く。各SERVICEカード上部のバナー画像。アスペクト比 16:9 推奨。
+`index.html` の `<img class="service__card-banner" src="...">` を差し替えると反映される。
+
+```
+service/
+  svc-01-shindan.webp   ... 建築物診断調査
+  svc-02-gaiheki.webp   ... 外壁改修工事
+  svc-03-bousui.webp    ... 防水工事
+  svc-04-tosou.webp     ... 塗装工事
+  svc-05-shitaji.webp   ... 下地補修工事
+  svc-06-sealing.webp   ... シーリング工事
+  svc-07-tile.webp      ... タイル工事
+  svc-08-sakan.webp     ... 左官工事
+```
+
+---
+
 ## ヒーロー 動画 / 写真（後日差し込み）
 
 ```html
