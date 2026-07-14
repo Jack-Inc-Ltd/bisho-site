@@ -222,7 +222,7 @@
             submitBtn.disabled = false;
             submitBtn.innerHTML = submitHTML;
           }
-          alert('送信に失敗しました。お手数ですが、お電話（080-3997-5935）でご連絡ください。');
+          alert('送信に失敗しました。お手数ですが、時間をおいて再度お試しください。');
         });
     });
   }

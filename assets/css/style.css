@@ -1722,9 +1722,11 @@ button {
 }
 
 .floating-cta__btn--contact {
-  background: var(--navy);
-  color: var(--white);
-  border: 1px solid rgba(255,255,255,0.16);
+  background: var(--gold);
+  color: var(--ink);
+  border: 1px solid var(--gold);
+  min-width: 220px;
+  justify-content: center;
 }
 
 .floating-cta__btn svg {
