@@ -157,12 +157,25 @@
 
 
   /* ----------------------------------------------------------------
-     6. お問い合わせフォーム 送信ダミー + サンクス表示
+     6. お問い合わせフォーム（Web3Forms 送信 + サンクス表示）
+        受信先キー(access_key)がプレースホルダのままの間はデモ挙動
+        （実送信せずサンクス表示のみ）。本物のキー(UUID)に差し替えると
+        自動で実送信に切り替わる。→ 稼働化はキー1行の差し替えだけ。
   ---------------------------------------------------------------- */
   const contactForm  = document.querySelector('#contact-form');
   const thanksBlock  = document.querySelector('.contact__thanks');
 
   if (contactForm && thanksBlock) {
+    const showThanks = () => {
+      contactForm.style.display = 'none';
+      thanksBlock.classList.add('is-visible');
+      // サンクスブロックにフォーカスを移動（アクセシビリティ）
+      thanksBlock.setAttribute('tabindex', '-1');
+      thanksBlock.focus();
+      // 画面内にスクロール
+      thanksBlock.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    };
+
     contactForm.addEventListener('submit', (e) => {
       e.preventDefault();
 
@@ -174,23 +187,43 @@
 
       // 送信ボタンを無効化（二重送信防止）
       const submitBtn = contactForm.querySelector('.form-submit');
+      const submitHTML = submitBtn ? submitBtn.innerHTML : '';
       if (submitBtn) {
         submitBtn.disabled = true;
         submitBtn.textContent = '送信中...';
       }
 
-      // ダミー待機後にサンクス表示（実際のAPI呼び出しに差し替え可）
-      setTimeout(() => {
-        contactForm.style.display = 'none';
-        thanksBlock.classList.add('is-visible');
+      // access_key が本物（UUID形式）なら実送信、プレースホルダならデモ挙動
+      const accessKey = (contactForm.querySelector('input[name="access_key"]') || {}).value || '';
+      const keyIsLive = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/.test(accessKey);
 
-        // サンクスブロックにフォーカスを移動（アクセシビリティ）
-        thanksBlock.setAttribute('tabindex', '-1');
-        thanksBlock.focus();
+      if (!keyIsLive) {
+        // デモ挙動（受信先キー未設定）：実送信せずサンクス表示のみ
+        setTimeout(showThanks, 600);
+        return;
+      }
 
-        // 画面内にスクロール
-        thanksBlock.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }, 600);
+      // 本番：Web3Forms へ実送信
+      fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: new FormData(contactForm)
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data && data.success) {
+            showThanks();
+          } else {
+            throw new Error(data && data.message ? data.message : 'send failed');
+          }
+        })
+        .catch(() => {
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = submitHTML;
+          }
+          alert('送信に失敗しました。お手数ですが、お電話（080-3997-5935）でご連絡ください。');
+        });
     });
   }
 

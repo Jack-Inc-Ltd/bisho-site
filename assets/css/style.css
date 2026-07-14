@@ -855,7 +855,6 @@ button {
   padding: var(--sp-lg) var(--sp-md);
   border-bottom: 1px solid var(--line);
   position: relative;
-  overflow: hidden;
   transition: background var(--dur-base);
 }
 
@@ -879,17 +878,12 @@ button {
   background: rgba(184, 151, 90, 0.04);
 }
 
-.service__card-banner {
-  display: block;
-  width: calc(100% + 2 * var(--sp-md));
-  margin: calc(-1 * var(--sp-lg)) calc(-1 * var(--sp-md)) var(--sp-md);
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
-  transition: transform var(--dur-slow) var(--ease);
-}
-
-.service__card:hover .service__card-banner {
-  transform: scale(1.04);
+.service__card-icon {
+  width: 44px;
+  height: 44px;
+  color: var(--gold);
+  margin-bottom: var(--sp-md);
+  flex-shrink: 0;
 }
 
 .service__card-num {
@@ -1065,29 +1059,17 @@ button {
 }
 
 .gallery__tag {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  z-index: 2;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  margin: 0;
-  padding: 0.5rem 0.75rem;
   font-family: var(--font-label);
-  font-size: 0.62rem;
-  letter-spacing: 0.16em;
-  color: var(--white);
+  font-size: 0.65rem;
+  letter-spacing: 0.14em;
+  color: rgba(0,0,0,0.35);
   text-transform: uppercase;
-  background: rgba(14,27,51,0.72);
+  position: relative;
+  z-index: 1;
 }
 
-.gallery__tag::before {
-  content: '';
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: var(--gold);
+.gallery__item:hover .gallery__placeholder {
+  background: #E8E6E2;
 }
 
 .gallery__real-img {
@@ -1095,11 +1077,6 @@ button {
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: transform var(--dur-slow) var(--ease);
-}
-
-.gallery__item:hover .gallery__real-img {
-  transform: scale(1.05);
 }
 
 .gallery__footer {
