@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
 
-# 公開時（独自ドメイン確定後）に、下行のコメントを外してドメインを反映する
-# Sitemap: https://<本番ドメイン>/sitemap.xml
+Sitemap: https://bisho-construction.net/sitemap.xml
