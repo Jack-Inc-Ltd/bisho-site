@@ -1828,3 +1828,32 @@ button {
 
 .text-gold { color: var(--gold); }
 .text-silver { color: var(--silver); }
+
+
+/* ------------------------------------------------------------------
+   17. Keyboard Focus Visibility（ブランド準拠の金リング）
+   ui-ux-pro-max 納品前チェック「Focus states visible for keyboard nav」。
+   従来はフォーム欄のみ focus 装飾があり、ナビ/ボタン/ハンバーガー等は
+   ブラウザ既定の弱い枠線頼りだった。紺・紙どちらの背景でも視認できる
+   金 2px リングに統一（マウス操作時は :focus-visible 判定で非表示）。
+------------------------------------------------------------------ */
+a:focus-visible,
+button:focus-visible,
+.site-logo:focus-visible,
+.site-nav__link:focus-visible,
+.btn-primary:focus-visible,
+.btn-hero-primary:focus-visible,
+.btn-outline:focus-visible,
+.hamburger:focus-visible,
+.mobile-menu__link:focus-visible,
+.floating-cta__btn:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+/* マウスクリック由来のフォーカスでは既定リングを出さない */
+a:focus:not(:focus-visible),
+button:focus:not(:focus-visible) {
+  outline: none;
+}
